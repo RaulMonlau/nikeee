@@ -1,0 +1,12 @@
+
+
+  {
+    "/nikeee": {
+      "target": "https://images.mon-lab.shop/",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }

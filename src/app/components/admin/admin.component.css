@@ -1,0 +1,178 @@
+/* Global Page Styles */
+.admin-page {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1a1a1a;
+    color: #f1f1f1;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Banner Section */
+  .admin-banner-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .admin-banner {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    filter: brightness(60%);
+    border-radius: 10px;
+  }
+  
+  .banner-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #f1f1f1;
+  }
+  
+  .banner-overlay h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  }
+  
+  .banner-overlay p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Form Section */
+  .form-wrapper {
+    background-color: #2a2a2a;
+    padding: 40px;
+    border-radius: 8px;
+    max-width: 70%;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Ensure all inputs use border-box */
+  .admin-form input,
+  .admin-form textarea,
+  .admin-form select {
+    box-sizing: border-box;
+  }
+  
+  .admin-form {
+    width: 100%;
+  }
+  
+  /* Input Wrapper with Icon */
+  .input-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  .input-wrapper input,
+  .input-wrapper select,
+  .input-wrapper textarea,
+  .input-wrapper input[type="file"] {
+    width: 100%;
+    background-color: #333;
+    border: 1px solid #444;
+    padding: 12px 40px 12px 12px;
+    color: #f1f1f1;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* When input is valid */
+  .input-wrapper.valid input,
+  .input-wrapper.valid select,
+  .input-wrapper.valid textarea,
+  .input-wrapper.valid input[type="file"] {
+    border-color: #28a745;
+  }
+  
+  /* When input is invalid */
+  .input-wrapper.invalid input,
+  .input-wrapper.invalid select,
+  .input-wrapper.invalid textarea,
+  .input-wrapper.invalid input[type="file"] {
+    border-color: #dc3545;
+  }
+  
+  /* Icon Styles */
+  .icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+  }
+  
+  /* Textarea extra padding */
+  .textarea-wrapper textarea {
+    padding-right: 40px;
+  }
+  
+  /* File input extra styling */
+  .file-wrapper {
+    position: relative;
+  }
+  
+  /* Form Group Styles */
+  .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .form-group label {
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #ddd;
+  }
+  
+  /* Error Messages */
+  .error-messages small {
+    color: #dc3545;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  /* Checkbox Styles */
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #ccc;
+  }
+  
+  .checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Submit Button */
+  .save-button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #ff6600, #cc5200);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background: linear-gradient(45deg, #cc5200, #ff6600);
+    transform: translateY(-3px);
+  }

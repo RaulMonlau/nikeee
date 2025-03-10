@@ -1,0 +1,130 @@
+<div class="admin-page">
+  <!-- Banner -->
+  <div class="admin-banner-container">
+    <img src="http://79.155.66.139/nikeee/admin.jpg" alt="Banner Admin" class="admin-banner" />
+    <div class="banner-overlay">
+      <h1>Administración de Productos</h1>
+      <p>Agrega y edita productos en la plataforma</p>
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <div class="form-wrapper">
+    <form [formGroup]="adminForm" class="admin-form" (ngSubmit)="onSubmit()">
+      <!-- Reference -->
+      <div class="form-group">
+        <label for="reference">Nº de Referencia:</label>
+        <div class="input-wrapper" [ngClass]="{'valid': adminForm.controls['reference'].touched && adminForm.controls['reference'].valid, 'invalid': adminForm.controls['reference'].touched && adminForm.controls['reference'].invalid}">
+          <input type="text" id="reference" formControlName="reference" (blur)="onReferenceBlur()" />
+          <span class="icon" *ngIf="adminForm.controls['reference'].touched">
+            {{ adminForm.controls['reference'].valid ? '✓' : '✗' }}
+          </span>
+        </div>
+        <div class="error-messages" *ngIf="adminForm.controls['reference'].touched && adminForm.controls['reference'].invalid">
+          <small *ngIf="adminForm.controls['reference'].errors?.['required']">Campo obligatorio.</small>
+          <small *ngIf="adminForm.controls['reference'].errors?.['minlength']">Mínimo 3 caracteres.</small>
+          <small *ngIf="adminForm.controls['reference'].errors?.['maxlength']">Máximo 10 caracteres.</small>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Nombre del Producto:</label>
+        <div class="input-wrapper" [ngClass]="{'valid': adminForm.controls['name'].touched && adminForm.controls['name'].valid, 'invalid': adminForm.controls['name'].touched && adminForm.controls['name'].invalid}">
+          <input type="text" id="name" formControlName="name" />
+          <span class="icon" *ngIf="adminForm.controls['name'].touched">
+            {{ adminForm.controls['name'].valid ? '✓' : '✗' }}
+          </span>
+        </div>
+        <div class="error-messages" *ngIf="adminForm.controls['name'].touched && adminForm.controls['name'].invalid">
+          <small *ngIf="adminForm.controls['name'].errors?.['required']">Campo obligatorio.</small>
+          <small *ngIf="adminForm.controls['name'].errors?.['duplicateName']">El nombre ya existe.</small>
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="form-group">
+        <label for="price">Precio:</label>
+        <div class="input-wrapper" [ngClass]="{'valid': adminForm.controls['price'].touched && adminForm.controls['price'].valid, 'invalid': adminForm.controls['price'].touched && adminForm.controls['price'].invalid}">
+          <input type="number" id="price" formControlName="price" step="0.01" />
+          <span class="icon" *ngIf="adminForm.controls['price'].touched">
+            {{ adminForm.controls['price'].valid ? '✓' : '✗' }}
+          </span>
+        </div>
+        <div class="error-messages" *ngIf="adminForm.controls['price'].touched && adminForm.controls['price'].invalid">
+          <small *ngIf="adminForm.controls['price'].errors?.['required']">Campo obligatorio.</small>
+          <small *ngIf="adminForm.controls['price'].errors?.['min']">No puede ser negativo.</small>
+          <small *ngIf="adminForm.controls['price'].errors?.['max']">Máximo 10000€.</small>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Descripción:</label>
+        <div class="input-wrapper textarea-wrapper" [ngClass]="{'valid': adminForm.controls['description'].touched && adminForm.controls['description'].valid, 'invalid': adminForm.controls['description'].touched && adminForm.controls['description'].invalid}">
+          <textarea id="description" formControlName="description" rows="4"></textarea>
+          <span class="icon" *ngIf="adminForm.controls['description'].touched">
+            {{ adminForm.controls['description'].valid ? '✓' : '✗' }}
+          </span>
+        </div>
+        <div class="error-messages" *ngIf="adminForm.controls['description'].touched && adminForm.controls['description'].invalid">
+          <small *ngIf="adminForm.controls['description'].errors?.['required']">Campo obligatorio.</small>
+          <small *ngIf="adminForm.controls['description'].errors?.['minlength']">Mínimo 10 caracteres.</small>
+          <small *ngIf="adminForm.controls['description'].errors?.['maxlength']">Máximo 200 caracteres.</small>
+        </div>
+      </div>
+
+      <!-- Product Type -->
+      <div class="form-group">
+        <label for="productType">Tipo de Producto:</label>
+        <div class="input-wrapper select-wrapper" [ngClass]="{'valid': adminForm.controls['productType'].touched && adminForm.controls['productType'].valid, 'invalid': adminForm.controls['productType'].touched && adminForm.controls['productType'].invalid}">
+          <select id="productType" formControlName="productType">
+            <option value="" disabled selected>Seleccione una opción</option>
+            <option value="tipo1">Tipo 1</option>
+            <option value="tipo2">Tipo 2</option>
+            <option value="tipo3">Tipo 3</option>
+          </select>
+          <span class="icon" *ngIf="adminForm.controls['productType'].touched">
+            {{ adminForm.controls['productType'].valid ? '✓' : '✗' }}
+          </span>
+        </div>
+        <div class="error-messages" *ngIf="adminForm.controls['productType'].touched && adminForm.controls['productType'].invalid">
+          <small *ngIf="adminForm.controls['productType'].errors?.['required']">Debe seleccionar un tipo.</small>
+        </div>
+      </div>
+
+      <!-- Offer -->
+      <div class="form-group checkbox-group">
+        <label>
+          <input type="checkbox" formControlName="offer" />
+          Producto de oferta
+        </label>
+      </div>
+
+      <!-- Product Image -->
+      <div class="form-group">
+        <label for="productImage">Imagen del Producto:</label>
+        <div class="input-wrapper file-wrapper" [ngClass]="{'valid': adminForm.controls['productImage'].touched && adminForm.controls['productImage'].valid, 'invalid': adminForm.controls['productImage'].touched && adminForm.controls['productImage'].invalid}">
+          <input type="file" id="productImage" formControlName="productImage" accept="image/*" (change)="onProductImageChange($event)" />
+          <span class="icon" *ngIf="adminForm.controls['productImage'].touched">
+            {{ adminForm.controls['productImage'].valid ? '✓' : '✗' }}
+          </span>
+        </div>
+        <div class="error-messages" *ngIf="adminForm.controls['productImage'].touched && adminForm.controls['productImage'].invalid">
+          <small *ngIf="adminForm.controls['productImage'].errors?.['required']">Campo obligatorio.</small>
+        </div>
+        <!-- Vista previa de la imagen -->
+        <div *ngIf="previewImage" class="image-preview-container">
+          <img [src]="previewImage" alt="Vista previa" class="image-preview"/>
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="form-group">
+        <button type="submit" class="save-button" [disabled]="adminForm.invalid">
+          {{ isEditing ? 'Modificar' : 'Insertar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

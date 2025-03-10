@@ -1,0 +1,12 @@
+<div class="product-list">
+  <ul>
+    <li *ngFor="let product of (products$ | async)" class="product-card">
+      <img *ngIf="product.productImageData" [src]="product.productImageData" alt="{{ product.name }}" class="product-image" />
+      <h2>{{ product.name }}</h2>
+      <p>{{ product.description }}</p>
+      <p><strong>Precio:</strong> {{ product.price }} €</p>
+      <p><strong>Tipo:</strong> {{ product.productType }}</p>
+      <p><strong>Oferta:</strong> {{ product.offer ? 'Sí' : 'No' }}</p>
+    </li>
+  </ul>
+</div>
