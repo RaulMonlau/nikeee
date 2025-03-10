@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,8 +12,6 @@ import { ProductService } from '../../services/product.service';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class AdminComponent implements OnInit {
-  @Input() products: any[] = [];
-  // Ya no necesitamos emitir el productEvent, ya que el servicio se encarga de ello
   adminForm!: FormGroup;
   previewImage: string | null = null;
   isEditing: boolean = false;
@@ -33,17 +31,26 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  // El validador evita nombres duplicados (excetuando el producto que se está editando)
   noDuplicateNameValidator(control: AbstractControl): { [key: string]: any } | null {
-    if (!control.value) return null;
-    const duplicate = this.products.some(p => p.name.toLowerCase() === control.value.toLowerCase());
+    if (!control.value || !this.adminForm) return null;
+    const inputNameLower = control.value.toLowerCase();
+    // Si se está editando, el campo reference está deshabilitado y se toma su valor mediante getRawValue
+    const currentRef = this.adminForm.getRawValue().reference;
+    const duplicate = this.productService.products.some(p =>
+      p.name.toLowerCase() === inputNameLower && p.reference !== currentRef
+    );
     return duplicate ? { duplicateName: true } : null;
   }
 
+  // Al perder el foco en reference, se busca el producto. Si existe, se habilita el modo edición y se deshabilita el campo reference
   onReferenceBlur(): void {
     const ref = this.adminForm.get('reference')?.value;
     const product = this.productService.products.find(p => p.reference === ref);
     if (product) {
       this.isEditing = true;
+      // Se deshabilita reference para no permitir su modificación
+      this.adminForm.get('reference')?.disable();
       this.adminForm.patchValue({
         name: product.name,
         price: product.price,
@@ -54,7 +61,9 @@ export class AdminComponent implements OnInit {
       });
       this.previewImage = product.productImageData || null;
     } else {
+      // Si no se encuentra, nos aseguramos de que el campo reference esté habilitado
       this.isEditing = false;
+      this.adminForm.get('reference')?.enable();
     }
   }
 
@@ -75,13 +84,16 @@ export class AdminComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Se obtiene el valor real, incluyendo el campo reference aunque esté deshabilitado
+    const formValue = this.adminForm.getRawValue();
     if (this.adminForm.invalid) {
       this.adminForm.markAllAsTouched();
       return;
     }
-    // Actualiza el estado global a través del servicio
-    this.productService.addOrUpdateProduct(this.adminForm.value);
+    this.productService.addOrUpdateProduct(formValue);
     this.adminForm.reset();
+    // Rehabilitamos el campo reference para la próxima inserción
+    this.adminForm.get('reference')?.enable();
     this.previewImage = null;
     this.isEditing = false;
   }

@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '../../services/product.service';
+import { Observable } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -9,5 +11,9 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule]
 })
 export class ProductListComponent {
-  @Input() products: any[] = [];
+  products$: Observable<any[]>;
+
+  constructor(private productService: ProductService) {
+    this.products$ = this.productService.products$;
+  }
 }
